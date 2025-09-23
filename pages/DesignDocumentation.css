@@ -1,0 +1,447 @@
+.design-doc-container {
+  font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  color: #333;
+  background-color: #f9f7f2;
+  min-height: 100vh;
+}
+
+.doc-header {
+  text-align: center;
+  padding: 40px 0 20px;
+  background-color: #1a365d; /* 黛蓝色 */
+  color: white;
+  margin: -20px -20px 30px;
+  position: relative;
+}
+
+.doc-header h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.doc-header p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 装饰元素 */
+.doc-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background-color: #c53030; /* 朱砂红 */
+}
+
+.doc-tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.doc-tabs button {
+  padding: 12px 24px;
+  margin: 0 5px;
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 1rem;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.doc-tabs button:hover {
+  color: #1a365d; /* 黛蓝色 */
+}
+
+.doc-tabs button.active {
+  color: #1a365d; /* 黛蓝色 */
+  border-bottom: 3px solid #c53030; /* 朱砂红 */
+  font-weight: 500;
+}
+
+.doc-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  padding: 30px;
+}
+
+/* 流程图部分 */
+.flowchart-section h2,
+.trading-section h2,
+.responsive-section h2 {
+  color: #1a365d; /* 黛蓝色 */
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.flowchart-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.flowchart {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f9f7f2;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.flowchart-description {
+  flex: 1;
+  min-width: 300px;
+}
+
+.flowchart-description h3 {
+  color: #1a365d; /* 黛蓝色 */
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.flowchart-description ol,
+.flowchart-description ul {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.flowchart-description li {
+  margin-bottom: 8px;
+}
+
+.flowchart-description strong {
+  color: #c53030; /* 朱砂红 */
+}
+
+/* 交易界面部分 */
+.trading-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.layout-preview {
+  flex: 1;
+  min-width: 300px;
+  background-color: #f9f7f2;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.trading-description {
+  flex: 1;
+  min-width: 300px;
+}
+
+.trading-description h3 {
+  color: #1a365d; /* 黛蓝色 */
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.trading-description p,
+.trading-description ul,
+.trading-description ol {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+
+.trading-description li {
+  margin-bottom: 8px;
+}
+
+/* 布局预览样式 */
+.layout-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #1a365d; /* 黛蓝色 */
+  color: white;
+  padding: 10px;
+  border-radius: 4px 4px 0 0;
+}
+
+.layout-search,
+.layout-user {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.layout-sidebar {
+  width: 20%;
+  background-color: #e2e8f0;
+  padding: 10px;
+  float: left;
+  height: 400px;
+}
+
+.sidebar-item {
+  padding: 8px;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 4px;
+}
+
+.sidebar-item.active {
+  background-color: #1a365d; /* 黛蓝色 */
+  color: white;
+}
+
+.layout-main {
+  width: 80%;
+  float: right;
+  background-color: white;
+  height: 400px;
+  border: 1px solid #e2e8f0;
+}
+
+.filter-bar {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-item {
+  margin-right: 10px;
+  padding: 5px 10px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.product-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.card-img {
+  height: 80px;
+  background-color: #f0f0f0;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.card-info {
+  margin-bottom: 10px;
+}
+
+.card-name {
+  font-weight: bold;
+}
+
+.card-actions {
+  background-color: #c53030; /* 朱砂红 */
+  color: white;
+  padding: 5px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.pagination {
+  text-align: center;
+  padding: 10px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* 响应式设计部分 */
+.responsive-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.device-previews {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.responsive-description {
+  flex: 1;
+  min-width: 300px;
+}
+
+.responsive-description h3 {
+  color: #1a365d; /* 黛蓝色 */
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.responsive-description p,
+.responsive-description ul {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+
+.responsive-description li {
+  margin-bottom: 8px;
+}
+
+/* 设备预览样式 */
+.device-desktop,
+.device-tablet,
+.device-mobile {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #f9f7f2;
+}
+
+.device-desktop {
+  width: 100%;
+  max-width: 500px;
+}
+
+.device-tablet {
+  width: 100%;
+  max-width: 300px;
+}
+
+.device-mobile {
+  width: 100%;
+  max-width: 200px;
+}
+
+.device-header {
+  text-align: center;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #1a365d; /* 黛蓝色 */
+}
+
+.device-content {
+  background-color: white;
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.desktop-layout {
+  height: 250px;
+}
+
+.tablet-layout,
+.mobile-layout {
+  height: 300px;
+}
+
+.desktop-header,
+.tablet-header,
+.mobile-header {
+  background-color: #1a365d; /* 黛蓝色 */
+  color: white;
+  padding: 8px;
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 10px;
+}
+
+.desktop-sidebar {
+  width: 25%;
+  height: 180px;
+  background-color: #e2e8f0;
+  float: left;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.desktop-main {
+  width: 72%;
+  height: 180px;
+  background-color: #f0f0f0;
+  float: right;
+  border-radius: 4px;
+}
+
+.tablet-main {
+  height: 230px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+.mobile-menu {
+  background-color: #e2e8f0;
+  padding: 8px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 4px;
+}
+
+.mobile-main {
+  height: 200px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+  .doc-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .doc-header p {
+    font-size: 1rem;
+  }
+
+  .doc-content {
+    padding: 20px;
+  }
+
+  .doc-tabs button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .doc-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .doc-tabs {
+    flex-wrap: wrap;
+  }
+
+  .doc-tabs button {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+}
+
+/* 岭南风格装饰元素 */
+.doc-content::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-image: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h50v50H0V0zm25 25c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm0 2c4.602 0 8.5-3.898 8.5-8.5s-3.898-8.5-8.5-8.5-8.5 3.898-8.5 8.5 3.898 8.5 8.5 8.5z' fill='%23c53030' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  z-index: 0;
+  opacity: 0.3;
+}

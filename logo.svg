@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- 外框 -->
+  <rect x="15" y="15" width="170" height="170" rx="8" fill="none" stroke="#990000" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- 左侧电路图案 -->
+  <path d="M55,50 h25 v8 h-25 v8 h15 v8 h-15 v8 h25 v8 h-25 v8 h15 v8 h-15 v8 h25 v8" fill="none" stroke="#990000" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="55" cy="50" r="4" fill="#990000"/>
+  <circle cx="80" cy="50" r="4" fill="#990000"/>
+  <circle cx="55" cy="66" r="4" fill="#990000"/>
+  <circle cx="70" cy="66" r="4" fill="#990000"/>
+  <circle cx="55" cy="82" r="4" fill="#990000"/>
+  <circle cx="70" cy="82" r="4" fill="#990000"/>
+  <circle cx="55" cy="98" r="4" fill="#990000"/>
+  <circle cx="80" cy="98" r="4" fill="#990000"/>
+  <circle cx="55" cy="114" r="4" fill="#990000"/>
+  <circle cx="70" cy="114" r="4" fill="#990000"/>
+  <circle cx="55" cy="130" r="4" fill="#990000"/>
+  <circle cx="80" cy="130" r="4" fill="#990000"/>
+  <circle cx="55" cy="146" r="4" fill="#990000"/>
+  <circle cx="70" cy="146" r="4" fill="#990000"/>
+  
+  <!-- 右侧电路图案 -->
+  <path d="M145,50 h-25 v8 h25 v8 h-15 v8 h15 v8 h-25 v8 h25 v8 h-15 v8 h15 v8 h-25 v8" fill="none" stroke="#990000" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="145" cy="50" r="4" fill="#990000"/>
+  <circle cx="120" cy="50" r="4" fill="#990000"/>
+  <circle cx="145" cy="66" r="4" fill="#990000"/>
+  <circle cx="130" cy="66" r="4" fill="#990000"/>
+  <circle cx="145" cy="82" r="4" fill="#990000"/>
+  <circle cx="130" cy="82" r="4" fill="#990000"/>
+  <circle cx="145" cy="98" r="4" fill="#990000"/>
+  <circle cx="120" cy="98" r="4" fill="#990000"/>
+  <circle cx="145" cy="114" r="4" fill="#990000"/>
+  <circle cx="130" cy="114" r="4" fill="#990000"/>
+  <circle cx="145" cy="130" r="4" fill="#990000"/>
+  <circle cx="120" cy="130" r="4" fill="#990000"/>
+  <circle cx="145" cy="146" r="4" fill="#990000"/>
+  <circle cx="130" cy="146" r="4" fill="#990000"/>
+  
+  <!-- 中央方形装饰 -->
+  <path d="M105,70 h40 v20 h-40 z M105,110 h40 v20 h-40 z" fill="none" stroke="#990000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M130,70 v60" fill="none" stroke="#990000" stroke-width="3" stroke-linecap="round"/>
+  <path d="M105,85 h40 M105,125 h40" fill="none" stroke="#990000" stroke-width="3" stroke-linecap="round"/>
+  
+  <!-- L字母 -->
+  <path d="M75,65 v80 M75,65 h35 M110,65 v15 h-10 v15 h10 v15 h-10 v35" fill="none" stroke="#990000" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- ingo文字 -->
+  <text x="135" y="120" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#990000" text-anchor="middle" dominant-baseline="central">ingo</text>
+</svg>
