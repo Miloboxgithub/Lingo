@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - Lingo 智能文创平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E6A42A',
+                        secondary: '#A66C3F',
+                        accent: '#D85B32',
+                        light: '#FFF9F0',
+                        dark: '#333333',
+                        muted: '#8A8A8A'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 25px -5px rgba(230, 164, 42, 0.1), 0 10px 10px -5px rgba(230, 164, 42, 0.04)',
+                        'hover': '0 20px 25px -5px rgba(230, 164, 42, 0.2), 0 10px 10px -5px rgba(230, 164, 42, 0.1)'
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://picsum.photos/1200/600')",
+                        'overlay': 'linear-gradient(to right, rgba(255, 249, 240, 0.95), rgba(255, 249, 240, 0.8))'
+                    }
+                },
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            }
+            .text-shadow-sm {
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            .animate-float-delay-1 {
+                animation: float 6s ease-in-out 1s infinite;
+            }
+            .animate-float-delay-2 {
+                animation: float 6s ease-in-out 2s infinite;
+            }
+            .transition-custom {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .blur-backdrop {
+                backdrop-filter: blur(8px);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans text-dark antialiased min-h-screen flex items-center justify-center">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-5"></div>
+    <div class="absolute inset-0 bg-overlay"></div>
+    
+    <!-- 注册表单容器 -->
+    <div class="relative z-10 w-full max-w-md mx-4">
+        <!-- 返回首页链接 -->
+        <a href="index.html" class="absolute -top-16 left-0 flex items-center text-muted hover:text-primary transition-custom">
+            <i class="fa fa-arrow-left mr-2"></i>返回首页
+        </a>
+        
+        <!-- 注册卡片 -->
+        <div class="bg-white rounded-2xl shadow-soft p-8">
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <img src="logo.jpg" alt="Lingo Logo" class="h-16 mx-auto mb-4">
+                <h1 class="text-2xl font-serif font-bold text-dark">加入 Lingo</h1>
+                <p class="text-muted mt-2">开启你的文创创作之旅</p>
+            </div>
+            
+            <!-- 注册表单 -->
+            <form id="register-form" class="space-y-6">
+                <!-- 用户名输入 -->
+                <div>
+                    <label for="username" class="block text-sm font-medium text-dark mb-2">用户名</label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="username" 
+                            name="username"
+                            required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-custom"
+                            placeholder="请输入用户名"
+                        >
+                        <i class="fa fa-user absolute right-3 top-3 text-muted"></i>
+                    </div>
+                </div>
+                
+                <!-- 邮箱输入 -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-dark mb-2">邮箱地址</label>
+                    <div class="relative">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-custom"
+                            placeholder="请输入邮箱地址"
+                        >
+                        <i class="fa fa-envelope absolute right-3 top-3 text-muted"></i>
+                    </div>
+                </div>
+                
+                <!-- 密码输入 -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-dark mb-2">密码</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-custom"
+                            placeholder="请输入密码（至少8位）"
+                        >
+                        <i class="fa fa-lock absolute right-3 top-3 text-muted"></i>
+                    </div>
+                    <div id="password-strength" class="mt-2">
+                        <div class="flex space-x-1">
+                            <div class="h-1 flex-1 bg-gray-200 rounded-full"></div>
+                            <div class="h-1 flex-1 bg-gray-200 rounded-full"></div>
+                            <div class="h-1 flex-1 bg-gray-200 rounded-full"></div>
+                        </div>
+                        <p id="password-hint" class="text-xs text-muted mt-1"></p>
+                    </div>
+                </div>
+                
+                <!-- 确认密码 -->
+                <div>
+                    <label for="confirm-password" class="block text-sm font-medium text-dark mb-2">确认密码</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="confirm-password" 
+                            name="confirm-password"
+                            required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-custom"
+                            placeholder="请再次输入密码"
+                        >
+                        <i class="fa fa-lock absolute right-3 top-3 text-muted"></i>
+                    </div>
+                    <p id="password-match" class="text-xs text-red-500 mt-1 hidden">密码不匹配</p>
+                </div>
+                
+                <!-- 用户类型选择 -->
+                <div>
+                    <label class="block text-sm font-medium text-dark mb-2">用户类型</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                            <input type="radio" name="user-type" value="creator" class="sr-only" checked>
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 border-2 border-gray-300 rounded-full mr-3 relative">
+                                    <div class="w-2 h-2 bg-primary rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity"></div>
+                                </div>
+                                <span class="text-sm">创作者</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-lg cursor-pointer hover:border-primary transition-custom">
+                            <input type="radio" name="user-type" value="enthusiast" class="sr-only">
+                            <div class="flex items-center">
+                                <div class="w-4 h-4 border-2 border-gray-300 rounded-full mr-3 relative">
+                                    <div class="w-2 h-2 bg-primary rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity"></div>
+                                </div>
+                                <span class="text-sm">爱好者</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- 服务条款 -->
+                <div class="flex items-start">
+                    <input 
+                        type="checkbox" 
+                        id="terms"
+                        required
+                        class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary mt-1"
+                    >
+                    <label for="terms" class="ml-2 text-sm text-muted">
+                        我已阅读并同意
+                        <a href="#terms" class="text-primary hover:underline">服务条款</a>
+                        和
+                        <a href="#privacy" class="text-primary hover:underline">隐私政策</a>
+                    </label>
+                </div>
+                
+                <!-- 注册按钮 -->
+                <button 
+                    type="submit"
+                    class="w-full py-3 bg-primary text-white font-medium rounded-lg shadow-soft hover:shadow-hover transition-custom hover:-translate-y-0.5"
+                >
+                    <i class="fa fa-user-plus mr-2"></i>注册账号
+                </button>
+                
+                <!-- 分隔线 -->
+                <div class="relative flex items-center justify-center">
+                    <div class="w-full border-t border-gray-200"></div>
+                    <span class="absolute bg-white px-3 text-sm text-muted">或</span>
+                </div>
+                
+                <!-- 第三方注册 -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button 
+                        type="button"
+                        class="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:border-primary transition-custom"
+                    >
+                        <i class="fa fa-wechat text-green-500 mr-2"></i>
+                        <span class="text-sm">微信注册</span>
+                    </button>
+                    <button 
+                        type="button"
+                        class="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:border-primary transition-custom"
+                    >
+                        <i class="fa fa-weibo text-red-500 mr-2"></i>
+                        <span class="text-sm">微博注册</span>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- 登录链接 -->
+            <div class="text-center mt-6">
+                <p class="text-muted text-sm">
+                    已有账号？
+                    <a href="login.html" class="text-primary font-medium hover:underline">立即登录</a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 装饰元素 -->
+        <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- 脚本 -->
+    <script>
+        // 密码强度检测
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBars = document.querySelectorAll('#password-strength div div');
+            const hint = document.getElementById('password-hint');
+            
+            let strength = 0;
+            let hintText = '';
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+            if (password.match(/\d/)) strength++;
+            if (password.match(/[^a-zA-Z\d]/)) strength++;
+            
+            // 更新强度条
+            strengthBars.forEach((bar, index) => {
+                bar.className = 'h-1 flex-1 rounded-full';
+                if (index < strength) {
+                    if (strength === 1) bar.classList.add('bg-red-500');
+                    else if (strength === 2) bar.classList.add('bg-yellow-500');
+                    else if (strength >= 3) bar.classList.add('bg-green-500');
+                } else {
+                    bar.classList.add('bg-gray-200');
+                }
+            });
+            
+            // 更新提示文本
+            if (password.length === 0) {
+                hintText = '';
+            } else if (strength <= 1) {
+                hintText = '密码强度：弱';
+            } else if (strength <= 2) {
+                hintText = '密码强度：中';
+            } else {
+                hintText = '密码强度：强';
+            }
+            
+            hint.textContent = hintText;
+        });
+        
+        // 密码匹配检查
+        document.getElementById('confirm-password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const matchMessage = document.getElementById('password-match');
+            
+            if (confirmPassword && password !== confirmPassword) {
+                matchMessage.classList.remove('hidden');
+            } else {
+                matchMessage.classList.add('hidden');
+            }
+        });
+        
+        // 用户类型选择样式
+        document.querySelectorAll('input[name="user-type"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('label[for^="user-type"]').forEach(label => {
+                    const indicator = label.querySelector('div > div > div');
+                    if (label.querySelector('input').checked) {
+                        label.classList.add('border-primary', 'bg-primary/5');
+                        indicator.classList.remove('opacity-0');
+                    } else {
+                        label.classList.remove('border-primary', 'bg-primary/5');
+                        indicator.classList.add('opacity-0');
+                    }
+                });
+            });
+        });
+        
+        // 初始化用户类型选择样式
+        document.querySelector('input[name="user-type"]:checked').dispatchEvent(new Event('change'));
+        
+        // 注册表单处理
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const userType = document.querySelector('input[name="user-type"]:checked').value;
+            const terms = document.getElementById('terms').checked;
+            
+            // 表单验证
+            if (!username || !email || !password || !confirmPassword) {
+                alert('请填写完整的注册信息');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('两次输入的密码不一致');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('密码长度至少为8位');
+                return;
+            }
+            
+            if (!terms) {
+                alert('请同意服务条款和隐私政策');
+                return;
+            }
+            
+            // 模拟注册处理
+            console.log('注册信息:', { username, email, password, userType });
+            
+            // 显示加载状态
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>注册中...';
+            submitBtn.disabled = true;
+            
+            // 模拟API调用
+            setTimeout(() => {
+                // 这里应该是实际的注册API调用
+                // 注册成功后跳转到登录页面
+                alert('注册成功！请登录你的账号');
+                window.location.href = 'login.html';
+                
+                // 恢复按钮状态
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+        
+        // 第三方注册按钮点击事件
+        document.querySelectorAll('button[type="button"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const platform = this.querySelector('span').textContent;
+                alert(`即将跳转到${platform}授权页面`);
+                // 这里应该是实际的第三方注册逻辑
+            });
+        });
+    </script>
+</body>
+</html>

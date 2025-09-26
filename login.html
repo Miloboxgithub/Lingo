@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - Lingo 智能文创平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E6A42A',
+                        secondary: '#A66C3F',
+                        accent: '#D85B32',
+                        light: '#FFF9F0',
+                        dark: '#333333',
+                        muted: '#8A8A8A'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 25px -5px rgba(230, 164, 42, 0.1), 0 10px 10px -5px rgba(230, 164, 42, 0.04)',
+                        'hover': '0 20px 25px -5px rgba(230, 164, 42, 0.2), 0 10px 10px -5px rgba(230, 164, 42, 0.1)'
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "url('https://picsum.photos/1200/600')",
+                        'overlay': 'linear-gradient(to right, rgba(255, 249, 240, 0.95), rgba(255, 249, 240, 0.8))'
+                    }
+                },
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            }
+            .text-shadow-sm {
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            .animate-float-delay-1 {
+                animation: float 6s ease-in-out 1s infinite;
+            }
+            .animate-float-delay-2 {
+                animation: float 6s ease-in-out 2s infinite;
+            }
+            .transition-custom {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .blur-backdrop {
+                backdrop-filter: blur(8px);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans text-dark antialiased min-h-screen flex items-center justify-center">
+    <!-- 背景装饰 -->
+    <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-5"></div>
+    <div class="absolute inset-0 bg-overlay"></div>
+    
+    <!-- 登录表单容器 -->
+    <div class="relative z-10 w-full max-w-md mx-4">
+        <!-- 返回首页链接 -->
+        <a href="index.html" class="absolute -top-16 left-0 flex items-center text-muted hover:text-primary transition-custom">
+            <i class="fa fa-arrow-left mr-2"></i>返回首页
+        </a>
+        
+        <!-- 登录卡片 -->
+        <div class="bg-white rounded-2xl shadow-soft p-8">
+            <!-- Logo -->
+            <div class="text-center mb-8">
+                <img src="logo.jpg" alt="Lingo Logo" class="h-16 mx-auto mb-4">
+                <h1 class="text-2xl font-serif font-bold text-dark">欢迎回来</h1>
+                <p class="text-muted mt-2">登录你的 Lingo 账号</p>
+            </div>
+            
+            <!-- 登录表单 -->
+            <form id="login-form" class="space-y-6">
+                <!-- 邮箱输入 -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-dark mb-2">邮箱地址</label>
+                    <div class="relative">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email"
+                            required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-custom"
+                            placeholder="请输入邮箱地址"
+                        >
+                        <i class="fa fa-envelope absolute right-3 top-3 text-muted"></i>
+                    </div>
+                </div>
+                
+                <!-- 密码输入 -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-dark mb-2">密码</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password"
+                            required
+                            class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-custom"
+                            placeholder="请输入密码"
+                        >
+                        <i class="fa fa-lock absolute right-3 top-3 text-muted"></i>
+                    </div>
+                </div>
+                
+                <!-- 记住我和忘记密码 -->
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input 
+                            type="checkbox" 
+                            id="remember"
+                            class="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                        >
+                        <label for="remember" class="ml-2 text-sm text-muted">记住我</label>
+                    </div>
+                    <a href="#forgot-password" class="text-sm text-primary hover:underline">忘记密码？</a>
+                </div>
+                
+                <!-- 登录按钮 -->
+                <button 
+                    type="submit"
+                    class="w-full py-3 bg-primary text-white font-medium rounded-lg shadow-soft hover:shadow-hover transition-custom hover:-translate-y-0.5"
+                >
+                    <i class="fa fa-sign-in mr-2"></i>登录
+                </button>
+                
+                <!-- 分隔线 -->
+                <div class="relative flex items-center justify-center">
+                    <div class="w-full border-t border-gray-200"></div>
+                    <span class="absolute bg-white px-3 text-sm text-muted">或</span>
+                </div>
+                
+                <!-- 第三方登录 -->
+                <div class="grid grid-cols-2 gap-3">
+                    <button 
+                        type="button"
+                        class="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:border-primary transition-custom"
+                    >
+                        <i class="fa fa-wechat text-green-500 mr-2"></i>
+                        <span class="text-sm">微信登录</span>
+                    </button>
+                    <button 
+                        type="button"
+                        class="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:border-primary transition-custom"
+                    >
+                        <i class="fa fa-weibo text-red-500 mr-2"></i>
+                        <span class="text-sm">微博登录</span>
+                    </button>
+                </div>
+            </form>
+            
+            <!-- 注册链接 -->
+            <div class="text-center mt-6">
+                <p class="text-muted text-sm">
+                    还没有账号？
+                    <a href="register.html" class="text-primary font-medium hover:underline">立即注册</a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- 装饰元素 -->
+        <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- 脚本 -->
+    <script>
+        // 登录表单处理
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            // 简单的表单验证
+            if (!email || !password) {
+                alert('请填写完整的登录信息');
+                return;
+            }
+            
+            // 模拟登录处理
+            console.log('登录信息:', { email, password, remember });
+            
+            // 显示加载状态
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>登录中...';
+            submitBtn.disabled = true;
+            
+            // 模拟API调用
+            setTimeout(() => {
+                // 这里应该是实际的登录API调用
+                // 登录成功后跳转到首页
+                alert('登录成功！');
+                window.location.href = 'index.html';
+                
+                // 恢复按钮状态
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+        
+        // 第三方登录按钮点击事件
+        document.querySelectorAll('button[type="button"]').forEach(button => {
+            button.addEventListener('click', function() {
+                const platform = this.querySelector('span').textContent;
+                alert(`即将跳转到${platform}授权页面`);
+                // 这里应该是实际的第三方登录逻辑
+            });
+        });
+    </script>
+</body>
+</html>
