@@ -98,16 +98,31 @@
                 
                 <!-- 桌面导航 -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="#home" class="text-dark hover:text-primary font-medium transition-custom">首页</a>
-                    <a href="#features" class="text-dark hover:text-primary font-medium transition-custom">核心功能</a>
-                    <a href="#showcase" class="text-dark hover:text-primary font-medium transition-custom">文创展示</a>
-                    <a href="#community" class="text-dark hover:text-primary font-medium transition-custom">社区</a>
-                    <a href="#pricing" class="text-dark hover:text-primary font-medium transition-custom">定价</a>
+                    <a href="index.html" class="text-primary font-medium transition-custom">首页</a>
+                    <a href="generator.html" class="text-dark hover:text-primary font-medium transition-custom">AI生成器</a>
+                    <a href="works.html" class="text-dark hover:text-primary font-medium transition-custom">文创展示</a>
+                    <a href="community.html" class="text-dark hover:text-primary font-medium transition-custom">社区</a>
+                    <a href="pricing.html" class="text-dark hover:text-primary font-medium transition-custom">定价</a>
+                    <a href="profile.html" class="text-dark hover:text-primary font-medium transition-custom">个人中心</a>
                 </div>
                 
                 <div class="flex items-center space-x-4">
-                    <a href="login.html" class="hidden md:inline-block px-4 py-2 text-dark hover:text-primary font-medium transition-custom">登录</a>
-                    <a href="register.html" class="px-5 py-2 bg-primary text-white font-medium rounded-full shadow-soft hover:shadow-hover transition-custom hover:-translate-y-0.5">开始创作</a>
+                    <!-- 用户状态显示区域 -->
+                    <div id="user-status" class="hidden md:flex items-center space-x-6">
+                        <!-- 登录用户信息 -->
+                        <div id="logged-in-user" class="hidden items-center space-x-4 flex items-center">
+                            <div class="flex items-center space-x-3">
+                                <img id="user-avatar" src="" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-primary">
+                                <span id="user-name" class="text-dark font-medium text-base"></span>
+                            </div>
+                            <button id="logout-btn" class="px-4 py-2 text-sm text-muted hover:text-primary hover:bg-gray-100 rounded-lg transition-custom">退出</button>
+                        </div>
+                        <!-- 未登录状态 -->
+                        <div id="guest-user" class="flex items-center space-x-4">
+                            <a href="login.html" class="px-4 py-2 text-dark hover:text-primary font-medium transition-custom">登录</a>
+                            <a href="register.html" class="px-6 py-2 bg-primary text-white font-medium rounded-full shadow-soft hover:shadow-hover transition-custom hover:-translate-y-0.5">开始创作</a>
+                        </div>
+                    </div>
                     
                     <!-- 移动端菜单按钮 -->
                     <button id="menu-toggle" class="md:hidden text-dark hover:text-primary text-xl focus:outline-none">
@@ -120,11 +135,12 @@
         <!-- 移动端导航菜单 -->
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
             <div class="container mx-auto px-4 py-4 space-y-3">
-                <a href="#home" class="block py-2 text-dark hover:text-primary font-medium transition-custom">首页</a>
-                <a href="#features" class="block py-2 text-dark hover:text-primary font-medium transition-custom">核心功能</a>
-                <a href="#showcase" class="block py-2 text-dark hover:text-primary font-medium transition-custom">文创展示</a>
-                <a href="#community" class="block py-2 text-dark hover:text-primary font-medium transition-custom">社区</a>
-                <a href="#pricing" class="block py-2 text-dark hover:text-primary font-medium transition-custom">定价</a>
+                <a href="index.html" class="block py-2 text-primary font-medium transition-custom">首页</a>
+                <a href="generator.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">AI生成器</a>
+                <a href="works.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">文创展示</a>
+                <a href="community.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">社区</a>
+                <a href="pricing.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">定价</a>
+                <a href="profile.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">个人中心</a>
                 <a href="login.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">登录</a>
             </div>
         </div>
@@ -919,6 +935,104 @@
         pricingToggle.addEventListener('change', () => {
             // 这里可以添加价格切换逻辑
             console.log('Pricing toggle changed');
+        });
+
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        // 用户状态管理
+        function updateUserStatus() {
+            const token = localStorage.getItem('lingo_token');
+            const userData = localStorage.getItem('lingo_user');
+            
+            const loggedInUser = document.getElementById('logged-in-user');
+            const guestUser = document.getElementById('guest-user');
+            const userStatus = document.getElementById('user-status');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    
+                    // 显示用户信息
+                    document.getElementById('user-name').textContent = user.username;
+                    document.getElementById('user-avatar').src = user.avatar || 'https://randomuser.me/api/portraits/lego/1.jpg';
+                    
+                    // 切换显示状态
+                    loggedInUser.classList.remove('hidden');
+                    guestUser.classList.add('hidden');
+                    userStatus.classList.remove('hidden');
+                } catch (error) {
+                    console.error('解析用户数据失败:', error);
+                    clearUserData();
+                }
+            } else {
+                // 显示访客状态
+                loggedInUser.classList.add('hidden');
+                guestUser.classList.remove('hidden');
+                userStatus.classList.remove('hidden');
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            clearUserData();
+            updateUserStatus();
+            alert('已退出登录');
+        }
+
+        // 清除用户数据
+        function clearUserData() {
+            localStorage.removeItem('lingo_token');
+            localStorage.removeItem('lingo_user');
+            localStorage.removeItem('lingo_remember');
+        }
+
+        // 检查用户登录状态
+        async function checkUserAuth() {
+            const token = localStorage.getItem('lingo_token');
+            if (!token) {
+                return false;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 更新用户信息
+                    localStorage.setItem('lingo_user', JSON.stringify(result.data.user));
+                    return true;
+                } else {
+                    // token无效，清除数据
+                    clearUserData();
+                    return false;
+                }
+            } catch (error) {
+                console.error('验证用户状态失败:', error);
+                return false;
+            }
+        }
+
+        // 页面加载时初始化用户状态
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 先更新UI状态
+            updateUserStatus();
+            
+            // 然后验证token有效性
+            const isValid = await checkUserAuth();
+            if (!isValid) {
+                updateUserStatus(); // 重新更新状态
+            }
+            
+            // 绑定退出按钮事件
+            document.getElementById('logout-btn').addEventListener('click', logout);
         });
     </script>
 </body>

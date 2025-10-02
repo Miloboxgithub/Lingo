@@ -86,20 +86,33 @@
         }
     </style>
 </head>
-<body class="bg-light font-sans text-dark antialiased min-h-screen flex items-center justify-center">
-    <!-- 背景装饰 -->
-    <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-5"></div>
-    <div class="absolute inset-0 bg-overlay"></div>
-    
-    <!-- 注册表单容器 -->
-    <div class="relative z-10 w-full max-w-md mx-4">
-        <!-- 返回首页链接 -->
-        <a href="index.html" class="absolute -top-16 left-0 flex items-center text-muted hover:text-primary transition-custom">
-            <i class="fa fa-arrow-left mr-2"></i>返回首页
-        </a>
+<body class="bg-light font-sans text-dark antialiased min-h-screen">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-white shadow-soft">
+        <div class="container mx-auto px-4 md:px-6">
+            <nav class="flex items-center justify-between py-4">
+                <div class="flex items-center">
+                    <a href="index.html">
+                        <img src="logo.jpg" alt="Lingo Logo" class="h-16">
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-muted hover:text-primary font-medium transition-custom">返回首页</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="pt-24 pb-16 min-h-screen flex items-center justify-center">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-5"></div>
+        <div class="absolute inset-0 bg-overlay"></div>
         
-        <!-- 注册卡片 -->
-        <div class="bg-white rounded-2xl shadow-soft p-8">
+        <!-- 注册表单容器 -->
+        <div class="relative z-10 w-full max-w-md mx-4">
+            <!-- 注册卡片 -->
+            <div class="bg-white rounded-2xl shadow-soft p-8">
             <!-- Logo -->
             <div class="text-center mb-8">
                 <img src="logo.jpg" alt="Lingo Logo" class="h-16 mx-auto mb-4">
@@ -232,13 +245,13 @@
                 </button>
                 
                 <!-- 分隔线 -->
-                <div class="relative flex items-center justify-center">
+                <!-- <div class="relative flex items-center justify-center">
                     <div class="w-full border-t border-gray-200"></div>
                     <span class="absolute bg-white px-3 text-sm text-muted">或</span>
-                </div>
+                </div> -->
                 
                 <!-- 第三方注册 -->
-                <div class="grid grid-cols-2 gap-3">
+                <!-- <div class="grid grid-cols-2 gap-3">
                     <button 
                         type="button"
                         class="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:border-primary transition-custom"
@@ -253,7 +266,7 @@
                         <i class="fa fa-weibo text-red-500 mr-2"></i>
                         <span class="text-sm">微博注册</span>
                     </button>
-                </div>
+                </div> -->
             </form>
             
             <!-- 登录链接 -->
@@ -327,14 +340,16 @@
         // 用户类型选择样式
         document.querySelectorAll('input[name="user-type"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                document.querySelectorAll('label[for^="user-type"]').forEach(label => {
-                    const indicator = label.querySelector('div > div > div');
-                    if (label.querySelector('input').checked) {
-                        label.classList.add('border-primary', 'bg-primary/5');
-                        indicator.classList.remove('opacity-0');
-                    } else {
-                        label.classList.remove('border-primary', 'bg-primary/5');
-                        indicator.classList.add('opacity-0');
+                document.querySelectorAll('label').forEach(label => {
+                    if (label.querySelector('input[name="user-type"]')) {
+                        const indicator = label.querySelector('div > div > div');
+                        if (label.querySelector('input').checked) {
+                            label.classList.add('border-primary', 'bg-primary/5');
+                            indicator.classList.remove('opacity-0');
+                        } else {
+                            label.classList.remove('border-primary', 'bg-primary/5');
+                            indicator.classList.add('opacity-0');
+                        }
                     }
                 });
             });
@@ -343,8 +358,11 @@
         // 初始化用户类型选择样式
         document.querySelector('input[name="user-type"]:checked').dispatchEvent(new Event('change'));
         
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:3000/api';
+
         // 注册表单处理
-        document.getElementById('register-form').addEventListener('submit', function(e) {
+        document.getElementById('register-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
@@ -375,26 +393,49 @@
                 return;
             }
             
-            // 模拟注册处理
-            console.log('注册信息:', { username, email, password, userType });
-            
             // 显示加载状态
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>注册中...';
             submitBtn.disabled = true;
             
-            // 模拟API调用
-            setTimeout(() => {
-                // 这里应该是实际的注册API调用
-                // 注册成功后跳转到登录页面
-                alert('注册成功！请登录你的账号');
-                window.location.href = 'login.html';
+            try {
+                // 调用后端注册API
+                const response = await fetch(`${API_BASE_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        email: email,
+                        password: password,
+                        userType: userType
+                    })
+                });
                 
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 保存token到localStorage
+                    localStorage.setItem('lingo_token', result.data.token);
+                    localStorage.setItem('lingo_user', JSON.stringify(result.data.user));
+                    
+                    alert('注册成功！');
+                    window.location.href = 'index.html';
+                } else {
+                    alert('注册失败: ' + result.message);
+                    // 恢复按钮状态
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('注册请求失败:', error);
+                alert('网络错误，请稍后重试');
                 // 恢复按钮状态
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-            }, 2000);
+            }
         });
         
         // 第三方注册按钮点击事件

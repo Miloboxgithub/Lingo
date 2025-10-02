@@ -86,20 +86,33 @@
         }
     </style>
 </head>
-<body class="bg-light font-sans text-dark antialiased min-h-screen flex items-center justify-center">
-    <!-- 背景装饰 -->
-    <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-5"></div>
-    <div class="absolute inset-0 bg-overlay"></div>
-    
-    <!-- 登录表单容器 -->
-    <div class="relative z-10 w-full max-w-md mx-4">
-        <!-- 返回首页链接 -->
-        <a href="index.html" class="absolute -top-16 left-0 flex items-center text-muted hover:text-primary transition-custom">
-            <i class="fa fa-arrow-left mr-2"></i>返回首页
-        </a>
+<body class="bg-light font-sans text-dark antialiased min-h-screen">
+    <!-- 导航栏 -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-white shadow-soft">
+        <div class="container mx-auto px-4 md:px-6">
+            <nav class="flex items-center justify-between py-4">
+                <div class="flex items-center">
+                    <a href="index.html">
+                        <img src="logo.jpg" alt="Lingo Logo" class="h-16">
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-muted hover:text-primary font-medium transition-custom">返回首页</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="pt-24 pb-16 min-h-screen flex items-center justify-center">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-5"></div>
+        <div class="absolute inset-0 bg-overlay"></div>
         
-        <!-- 登录卡片 -->
-        <div class="bg-white rounded-2xl shadow-soft p-8">
+        <!-- 登录表单容器 -->
+        <div class="relative z-10 w-full max-w-md mx-4">
+            <!-- 登录卡片 -->
+            <div class="bg-white rounded-2xl shadow-soft p-8">
             <!-- Logo -->
             <div class="text-center mb-8">
                 <img src="logo.jpg" alt="Lingo Logo" class="h-16 mx-auto mb-4">
@@ -163,13 +176,13 @@
                 </button>
                 
                 <!-- 分隔线 -->
-                <div class="relative flex items-center justify-center">
+                <!-- <div class="relative flex items-center justify-center">
                     <div class="w-full border-t border-gray-200"></div>
                     <span class="absolute bg-white px-3 text-sm text-muted">或</span>
-                </div>
+                </div> -->
                 
                 <!-- 第三方登录 -->
-                <div class="grid grid-cols-2 gap-3">
+                <!-- <div class="grid grid-cols-2 gap-3">
                     <button 
                         type="button"
                         class="flex items-center justify-center py-3 border border-gray-200 rounded-lg hover:border-primary transition-custom"
@@ -184,7 +197,7 @@
                         <i class="fa fa-weibo text-red-500 mr-2"></i>
                         <span class="text-sm">微博登录</span>
                     </button>
-                </div>
+                </div> -->
             </form>
             
             <!-- 注册链接 -->
@@ -202,7 +215,10 @@
 
     <!-- 脚本 -->
     <script>
-        // 登录表单处理
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        // 登录表单处理 - 简化版本，任意值都能登录
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -210,32 +226,32 @@
             const password = document.getElementById('password').value;
             const remember = document.getElementById('remember').checked;
             
-            // 简单的表单验证
-            if (!email || !password) {
-                alert('请填写完整的登录信息');
-                return;
-            }
-            
-            // 模拟登录处理
-            console.log('登录信息:', { email, password, remember });
-            
             // 显示加载状态
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin mr-2"></i>登录中...';
             submitBtn.disabled = true;
             
-            // 模拟API调用
+            // 模拟登录过程
             setTimeout(() => {
-                // 这里应该是实际的登录API调用
-                // 登录成功后跳转到首页
+                // 创建模拟用户数据
+                const mockUser = {
+                    id: 1,
+                    username: email.split('@')[0] || '用户',
+                    email: email,
+                    avatar: 'https://randomuser.me/api/portraits/lego/1.jpg'
+                };
+                
+                // 保存到localStorage
+                localStorage.setItem('lingo_token', 'mock_token_' + Date.now());
+                localStorage.setItem('lingo_user', JSON.stringify(mockUser));
+                if (remember) {
+                    localStorage.setItem('lingo_remember', 'true');
+                }
+                
                 alert('登录成功！');
                 window.location.href = 'index.html';
-                
-                // 恢复按钮状态
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-            }, 1500);
+            }, 1000);
         });
         
         // 第三方登录按钮点击事件
@@ -246,6 +262,18 @@
                 // 这里应该是实际的第三方登录逻辑
             });
         });
+
+        // 检查是否已登录
+        function checkLoginStatus() {
+            const token = localStorage.getItem('lingo_token');
+            if (token) {
+                // 如果已登录，可以显示用户信息或跳转到首页
+                console.log('用户已登录');
+            }
+        }
+
+        // 页面加载时检查登录状态
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
     </script>
 </body>
 </html>

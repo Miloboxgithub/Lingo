@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社区 - Lingo 智能文创平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E6A42A',
+                        secondary: '#A66C3F',
+                        accent: '#D85B32',
+                        light: '#FFF9F0',
+                        dark: '#333333',
+                        muted: '#8A8A8A'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Noto Serif SC', 'serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 25px -5px rgba(230, 164, 42, 0.1), 0 10px 10px -5px rgba(230, 164, 42, 0.04)',
+                        'hover': '0 20px 25px -5px rgba(230, 164, 42, 0.2), 0 10px 10px -5px rgba(230, 164, 42, 0.1)'
+                    }
+                },
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .transition-custom {
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .blur-backdrop {
+                backdrop-filter: blur(8px);
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans text-dark antialiased">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 md:px-6">
+            <nav class="flex items-center justify-between py-4 md:py-5">
+                <div class="flex items-center">
+                    <a href="index.html">
+                        <img src="logo.jpg" alt="Lingo Logo" class="h-18 md:h-20">
+                    </a>
+                </div>
+                
+                <!-- 桌面导航 -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-dark hover:text-primary font-medium transition-custom">首页</a>
+                    <a href="works.html" class="text-dark hover:text-primary font-medium transition-custom">文创展示</a>
+                    <a href="generator.html" class="text-dark hover:text-primary font-medium transition-custom">AI生成器</a>
+                    <a href="community.html" class="text-primary font-medium transition-custom">社区</a>
+                    <a href="pricing.html" class="text-dark hover:text-primary font-medium transition-custom">定价</a>
+                    <a href="profile.html" class="text-dark hover:text-primary font-medium transition-custom">个人中心</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- 用户状态显示区域 -->
+                    <div id="user-status" class="hidden md:flex items-center space-x-6">
+                        <!-- 登录用户信息 -->
+                        <div id="logged-in-user" class="hidden items-center space-x-4 flex items-center">
+                            <div class="flex items-center space-x-3">
+                                <img id="user-avatar" src="" alt="用户头像" class="w-10 h-10 rounded-full border-2 border-primary">
+                                <span id="user-name" class="text-dark font-medium text-base"></span>
+                            </div>
+                            <button id="logout-btn" class="px-4 py-2 text-sm text-muted hover:text-primary hover:bg-gray-100 rounded-lg transition-custom">退出</button>
+                        </div>
+                        <!-- 未登录状态 -->
+                        <div id="guest-user" class="flex items-center space-x-4">
+                            <a href="login.html" class="px-4 py-2 text-dark hover:text-primary font-medium transition-custom">登录</a>
+                            <a href="register.html" class="px-6 py-2 bg-primary text-white font-medium rounded-full shadow-soft hover:shadow-hover transition-custom hover:-translate-y-0.5">开始创作</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 移动端菜单按钮 -->
+                    <button id="menu-toggle" class="md:hidden text-dark hover:text-primary text-xl focus:outline-none">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg absolute w-full">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="index.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">首页</a>
+                <a href="works.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">文创展示</a>
+                <a href="generator.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">AI生成器</a>
+                <a href="community.html" class="block py-2 text-primary font-medium transition-custom">社区</a>
+                <a href="pricing.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">定价</a>
+                <a href="profile.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">个人中心</a>
+                <a href="login.html" class="block py-2 text-dark hover:text-primary font-medium transition-custom">登录</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容 -->
+    <div class="pt-28 md:pt-32 pb-16">
+        <div class="container mx-auto px-4 md:px-6">
+            <!-- 页面标题 -->
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-serif font-bold text-dark mb-4">创作者社区</h1>
+                <p class="text-muted text-lg">与全球文创爱好者交流创作心得，分享设计灵感</p>
+            </div>
+
+            <!-- 社区内容 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- 左侧内容 -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- 热门讨论 -->
+                    <div class="bg-white rounded-2xl shadow-soft p-6">
+                        <h2 class="text-xl font-serif font-bold text-dark mb-6">热门讨论</h2>
+                        
+                        <div class="space-y-4">
+                            <!-- 讨论帖子 1 -->
+                            <div class="border border-gray-100 rounded-lg p-4 hover:border-primary transition-custom">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://randomuser.me/api/portraits/lego/1.jpg" alt="用户头像" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-dark mb-1">传统纹样在现代设计中的应用</h3>
+                                        <p class="text-sm text-muted mb-2">如何将传统纹样与现代设计理念完美结合？分享你的经验和技巧...</p>
+                                        <div class="flex items-center space-x-4 text-sm text-muted">
+                                            <span>文创设计师</span>
+                                            <span>2小时前</span>
+                                            <span class="flex items-center">
+                                                <i class="fa fa-comment mr-1"></i>
+                                                24
+                                            </span>
+                                            <span class="flex items-center">
+                                                <i class="fa fa-heart mr-1"></i>
+                                                156
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 讨论帖子 2 -->
+                            <div class="border border-gray-100 rounded-lg p-4 hover:border-primary transition-custom">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://randomuser.me/api/portraits/lego/2.jpg" alt="用户头像" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-dark mb-1">AI生成纹样的版权问题讨论</h3>
+                                        <p class="text-sm text-muted mb-2">大家如何看待AI生成作品的版权归属？欢迎分享你的观点...</p>
+                                        <div class="flex items-center space-x-4 text-sm text-muted">
+                                            <span>法律顾问</span>
+                                            <span>5小时前</span>
+                                            <span class="flex items-center">
+                                                <i class="fa fa-comment mr-1"></i>
+                                                42
+                                            </span>
+                                            <span class="flex items-center">
+                                                <i class="fa fa-heart mr-1"></i>
+                                                89
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 讨论帖子 3 -->
+                            <div class="border border-gray-100 rounded-lg p-4 hover:border-primary transition-custom">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://randomuser.me/api/portraits/lego/3.jpg" alt="用户头像" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-dark mb-1">国潮设计趋势分析</h3>
+                                        <p class="text-sm text-muted mb-2">2024年国潮设计有哪些新趋势？一起来探讨...</p>
+                                        <div class="flex items-center space-x-4 text-sm text-muted">
+                                            <span>趋势分析师</span>
+                                            <span>1天前</span>
+                                            <span class="flex items-center">
+                                                <i class="fa fa-comment mr-1"></i>
+                                                18
+                                            </span>
+                                            <span class="flex items-center">
+                                                <i class="fa fa-heart mr-1"></i>
+                                                67
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 创作分享 -->
+                    <div class="bg-white rounded-2xl shadow-soft p-6">
+                        <h2 class="text-xl font-serif font-bold text-dark mb-6">创作分享</h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- 分享卡片 1 -->
+                            <div class="border border-gray-100 rounded-lg p-4 hover:border-primary transition-custom">
+                                <img src="https://picsum.photos/seed/10/300/200" alt="创作分享" class="w-full h-32 object-cover rounded mb-3">
+                                <h3 class="font-semibold text-dark mb-2">水墨风格的现代演绎</h3>
+                                <p class="text-sm text-muted mb-3">分享如何将传统水墨技法融入现代文创设计</p>
+                                <div class="flex items-center justify-between text-sm text-muted">
+                                    <span>水墨艺术家</span>
+                                    <span>3小时前</span>
+                                </div>
+                            </div>
+
+                            <!-- 分享卡片 2 -->
+                            <div class="border border-gray-100 rounded-lg p-4 hover:border-primary transition-custom">
+                                <img src="https://picsum.photos/seed/11/300/200" alt="创作分享" class="w-full h-32 object-cover rounded mb-3">
+                                <h3 class="font-semibold text-dark mb-2">极简主义的设计哲学</h3>
+                                <p class="text-sm text-muted mb-3">探讨极简设计在文创产品中的应用</p>
+                                <div class="flex items-center justify-between text-sm text-muted">
+                                    <span>设计思考者</span>
+                                    <span>6小时前</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧边栏 -->
+                <div class="space-y-6">
+                    <!-- 发布新帖 -->
+                    <div class="bg-white rounded-2xl shadow-soft p-6">
+                        <h3 class="font-semibold text-dark mb-4">发布新帖</h3>
+                        <textarea class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary transition-custom resize-none" rows="4" placeholder="分享你的想法..."></textarea>
+                        <div class="flex justify-between items-center mt-4">
+                            <div class="flex space-x-2">
+                                <button class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-muted hover:bg-primary hover:text-white transition-custom">
+                                    <i class="fa fa-image"></i>
+                                </button>
+                                <button class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-muted hover:bg-primary hover:text-white transition-custom">
+                                    <i class="fa fa-link"></i>
+                                </button>
+                            </div>
+                            <button class="px-4 py-2 bg-primary text-white text-sm rounded-lg hover:bg-primary/90 transition-custom">发布</button>
+                        </div>
+                    </div>
+
+                    <!-- 热门标签 -->
+                    <div class="bg-white rounded-2xl shadow-soft p-6">
+                        <h3 class="font-semibold text-dark mb-4">热门标签</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full">#传统纹样</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-600 text-sm rounded-full">#国潮设计</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-600 text-sm rounded-full">#水墨艺术</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-600 text-sm rounded-full">#极简主义</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-600 text-sm rounded-full">#AI创作</span>
+                            <span class="px-3 py-1 bg-red-100 text-red-600 text-sm rounded-full">#版权讨论</span>
+                        </div>
+                    </div>
+
+                    <!-- 活跃用户 -->
+                    <div class="bg-white rounded-2xl shadow-soft p-6">
+                        <h3 class="font-semibold text-dark mb-4">活跃用户</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://randomuser.me/api/portraits/lego/4.jpg" alt="用户头像" class="w-8 h-8 rounded-full">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">文创设计师</p>
+                                    <p class="text-xs text-muted">24篇帖子</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <img src="https://randomuser.me/api/portraits/lego/5.jpg" alt="用户头像" class="w-8 h-8 rounded-full">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">水墨艺术家</p>
+                                    <p class="text-xs text-muted">18篇帖子</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <img src="https://randomuser.me/api/portraits/lego/6.jpg" alt="用户头像" class="w-8 h-8 rounded-full">
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium">国潮先锋</p>
+                                    <p class="text-xs text-muted">15篇帖子</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+                <!-- 品牌信息 -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="logo.jpg" alt="Lingo Logo" class="h-16">
+                    </div>
+                    <p class="text-gray-400 mb-6 max-w-xs">
+                        Lingo 致力于通过人工智能技术赋能文化创意产业，让传统与创新完美融合，激发无限可能。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary transition-custom">
+                            <i class="fa fa-weibo"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary transition-custom">
+                            <i class="fa fa-wechat"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary transition-custom">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-white hover:bg-primary transition-custom">
+                            <i class="fa fa-behance"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 快速链接 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-primary transition-custom">首页</a></li>
+                        <li><a href="works.html" class="text-gray-400 hover:text-primary transition-custom">文创展示</a></li>
+                        <li><a href="generator.html" class="text-gray-400 hover:text-primary transition-custom">AI生成器</a></li>
+                        <li><a href="community.html" class="text-gray-400 hover:text-primary transition-custom">社区</a></li>
+                        <li><a href="pricing.html" class="text-gray-400 hover:text-primary transition-custom">定价</a></li>
+                        <li><a href="profile.html" class="text-gray-400 hover:text-primary transition-custom">个人中心</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 资源 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">资源中心</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-custom">帮助文档</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-custom">教程视频</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-custom">设计指南</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-custom">API 文档</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-custom">版权保护</a></li>
+                    </ul>
+                </div>
+                
+                <!-- 联系我们 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fa fa-envelope text-primary mr-2 mt-1"></i>
+                            <span class="text-gray-400">contact@lingo.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-phone text-primary mr-2 mt-1"></i>
+                            <span class="text-gray-400">400-123-4567</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-primary mr-2 mt-1"></i>
+                            <span class="text-gray-400">北京市海淀区中关村创意产业园 A 座 1001</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 版权信息 -->
+            <div class="border-t border-white/10 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 Lingo 智能文创平台. 保留所有权利.</p>
+                    <div class="flex space-x-6">
+                        <a href="#" class="text-gray-400 text-sm hover:text-primary transition-custom">隐私政策</a>
+                        <a href="#" class="text-gray-400 text-sm hover:text-primary transition-custom">服务条款</a>
+                        <a href="#" class="text-gray-400 text-sm hover:text-primary transition-custom">Cookie 政策</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 脚本 -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-white', 'shadow-soft', 'blur-backdrop');
+                navbar.classList.remove('bg-transparent');
+            } else {
+                navbar.classList.remove('bg-white', 'shadow-soft', 'blur-backdrop');
+                navbar.classList.add('bg-transparent');
+            }
+        });
+        
+        // 移动端菜单切换
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+
+        // API基础URL
+        const API_BASE_URL = 'http://localhost:3000/api';
+
+        // 用户状态管理
+        function updateUserStatus() {
+            const token = localStorage.getItem('lingo_token');
+            const userData = localStorage.getItem('lingo_user');
+            
+            const loggedInUser = document.getElementById('logged-in-user');
+            const guestUser = document.getElementById('guest-user');
+            const userStatus = document.getElementById('user-status');
+            
+            if (token && userData) {
+                try {
+                    const user = JSON.parse(userData);
+                    
+                    // 显示用户信息
+                    document.getElementById('user-name').textContent = user.username;
+                    document.getElementById('user-avatar').src = user.avatar || 'https://randomuser.me/api/portraits/lego/1.jpg';
+                    
+                    // 切换显示状态
+                    loggedInUser.classList.remove('hidden');
+                    guestUser.classList.add('hidden');
+                    userStatus.classList.remove('hidden');
+                } catch (error) {
+                    console.error('解析用户数据失败:', error);
+                    clearUserData();
+                }
+            } else {
+                // 显示访客状态
+                loggedInUser.classList.add('hidden');
+                guestUser.classList.remove('hidden');
+                userStatus.classList.remove('hidden');
+            }
+        }
+
+        // 退出登录
+        function logout() {
+            clearUserData();
+            updateUserStatus();
+            alert('已退出登录');
+        }
+
+        // 清除用户数据
+        function clearUserData() {
+            localStorage.removeItem('lingo_token');
+            localStorage.removeItem('lingo_user');
+            localStorage.removeItem('lingo_remember');
+        }
+
+        // 检查用户登录状态
+        async function checkUserAuth() {
+            const token = localStorage.getItem('lingo_token');
+            if (!token) {
+                return false;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 更新用户信息
+                    localStorage.setItem('lingo_user', JSON.stringify(result.data.user));
+                    return true;
+                } else {
+                    // token无效，清除数据
+                    clearUserData();
+                    return false;
+                }
+            } catch (error) {
+                console.error('验证用户状态失败:', error);
+                return false;
+            }
+        }
+
+        // 页面加载时初始化用户状态
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 先更新UI状态
+            updateUserStatus();
+            
+            // 然后验证token有效性
+            const isValid = await checkUserAuth();
+            if (!isValid) {
+                updateUserStatus(); // 重新更新状态
+            }
+            
+            // 绑定退出按钮事件
+            document.getElementById('logout-btn').addEventListener('click', logout);
+        });
+    </script>
+</body>
+</html>
