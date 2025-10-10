@@ -9,14 +9,14 @@
 </p>
 
 <p align="center">
-  <a href="#项目简介">项目简介</a> •
-  <a href="#核心功能">核心功能</a> •
-  <a href="#技术栈">技术栈</a> •
-  <a href="#快速开始">快速开始</a> •
-  <a href="#项目结构">项目结构</a> •
-  <a href="#部署指南">部署指南</a> •
-  <a href="#贡献指南">贡献指南</a> •
-  <a href="#许可证">许可证</a>
+  <a href="#project-introduction">项目简介</a> •
+  <a href="#core-features">核心功能</a> •
+  <a href="#tech-stack">技术栈</a> •
+  <a href="#quick-start">快速开始</a> •
+  <a href="#project-structure">项目结构</a> •
+  <a href="#deployment-guide">部署指南</a> •
+  <a href="#contributing">贡献指南</a> •
+  <a href="#license">许可证</a>
 </p>
 
 <p align="center">
@@ -25,7 +25,7 @@
   <img src="https://img.shields.io/badge/status-active-success.svg" alt="状态">
 </p>
 
-## 🌟 项目简介
+## 🌟 项目简介 <a id="project-introduction"></a>
 
 **Lingo** 是一个基于人工智能的文创设计平台，致力于将传统艺术与现代技术完美融合。通过先进的AI算法，我们赋能创作者快速生成独特的文创设计，从传统纹样到国潮风格，让创意无限延伸。
 
@@ -37,7 +37,7 @@
 - 👥 **创作者社区** - 活跃的交流分享平台
 - 💼 **商业授权** - 完善的版权保护机制
 
-## 🚀 核心功能
+## 🚀 核心功能 <a id="core-features"></a>
 
 ### 1. AI纹样生成器
 - **多种风格选择**：传统纹样、国潮风格、水墨风格、极简主义
@@ -61,7 +61,7 @@
 - **创作者版**：专业创作工具
 - **企业版**：团队协作功能
 
-## 🛠️ 技术栈
+## 🛠️ 技术栈 <a id="tech-stack"></a>
 
 ### 前端技术
 - **HTML5** - 语义化标记
@@ -78,7 +78,7 @@
 - **Visual Studio Code** - 代码编辑器
 - **Git** - 版本控制
 
-## 🎯 快速开始
+## 🎯 快速开始 <a id="quick-start"></a>
 
 ### 环境要求
 - Python 3.6+
@@ -127,7 +127,7 @@
    }
    ```
 
-## 📁 项目结构
+## 📁 项目结构 <a id="project-structure"></a>
 
 ```
 Lingo/
@@ -158,7 +158,7 @@ Lingo/
 - **register.html** - 用户注册页面
 - **profile.html** - 个人中心和管理页面
 
-## 🎨 设计特色
+## 🎨 设计特色 <a id="design-features"></a>
 
 ### 视觉设计
 - **色彩方案**：以金色(#E6A42A)为主色调，体现文创的典雅与价值
@@ -171,7 +171,7 @@ Lingo/
 - **实时反馈**：操作即时响应
 - **渐进增强**：基础功能优先，高级功能渐进
 
-## 🔧 部署指南
+## 🔧 部署指南 <a id="deployment-guide"></a>
 
 ### 本地开发
 
@@ -211,7 +211,7 @@ Lingo/
    - 配置日志轮转
    - 定期备份数据
 
-## 🤝 贡献指南
+## 🤝 贡献指南 <a id="contributing"></a>
 
 我们欢迎所有形式的贡献！请阅读以下指南：
 
@@ -232,16 +232,16 @@ Lingo/
 - 确保代码通过测试
 - 更新相关文档
 
-## 📝 更新日志
+## 📝 更新日志 <a id="changelog"></a>
 
-### v1.0.0 (2023-10-10)
+### v1.0.0 (2025-10-1)
 - ✅ 基础平台功能完成
 - ✅ AI纹样生成器
 - ✅ 用户认证系统
 - ✅ 响应式设计
 - ✅ 部署脚本
 
-## 🐛 常见问题
+## 🐛 常见问题 <a id="faq"></a>
 
 ### Q: 如何获得更多生成次数？
 A: 免费用户每月有5次生成额度，可以升级到创作者版获得更多生成机会。
@@ -255,11 +255,11 @@ A: 目前支持PNG格式导出，后续将支持SVG、JPG等格式。
 ### Q: 如何保护我的创意？
 A: 我们提供水印保护、版权登记和作品溯源等多重保护机制。
 
-## 📄 许可证
+## 📄 许可证 <a id="license"></a>
 
 本项目采用 MIT 许可证 - 查看 [LICENSE]() 文件了解详情。
 
-## 📞 联系我们
+## 📞 联系我们 <a id="contact"></a>
 
 - **邮箱**: 
 - **电话**: 
@@ -269,14 +269,14 @@ A: 我们提供水印保护、版权登记和作品溯源等多重保护机制�
   - 微信: 
   - Instagram: [@lingo.design]()
 
-## 🙏 致谢
+## 🙏 致谢 <a id="acknowledgments"></a>
 
 感谢所有为这个项目做出贡献的开发者、设计师和测试人员！
 
 ---
 
 <p align="center">
-  Made with ❤️ by <a href="https://github.com/Miloboxgithub">Milobox</a>
+  Made with ❤️ by <a href="">Milobox</a>
 </p>
 
 <p align="center">
