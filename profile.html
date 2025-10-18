@@ -445,16 +445,35 @@
         const API_BASE_URL = 'http://localhost:3000/api';
 
         // 用户状态管理
-        function updateUserStatus() {
+        async function updateUserStatus() {
             const token = localStorage.getItem('lingo_token');
-            const userData = localStorage.getItem('lingo_user');
             
             const loggedInUser = document.getElementById('logged-in-user');
             const userStatus = document.getElementById('user-status');
             
-            if (token && userData) {
-                try {
-                    const user = JSON.parse(userData);
+            if (!token) {
+                // 未登录，跳转到登录页
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            try {
+                // 调用后端API获取用户信息
+                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const user = result.data;
+                    
+                    // 更新localStorage中的用户数据
+                    localStorage.setItem('lingo_user', JSON.stringify(user));
                     
                     // 显示用户信息
                     document.getElementById('user-name').textContent = user.username;
@@ -465,15 +484,27 @@
                     document.getElementById('profile-email').textContent = user.email;
                     document.getElementById('profile-avatar').src = user.avatar || 'https://randomuser.me/api/portraits/lego/1.jpg';
                     
+                    // 如果有统计数据，更新统计信息
+                    if (user.stats) {
+                        document.querySelectorAll('#profile-info input[type="text"]')[0].value = user.username || '文创设计师';
+                        document.querySelectorAll('#profile-info input[type="email"]')[0].value = user.email || 'designer@example.com';
+                        
+                        // 更新创作统计
+                        if (user.stats.totalWorks) document.querySelector('.fa-paint-brush').parentElement.nextElementSibling.textContent = user.stats.totalWorks;
+                        if (user.stats.likes) document.querySelector('.fa-heart').parentElement.nextElementSibling.textContent = user.stats.likes;
+                        if (user.stats.views) document.querySelector('.fa-eye').parentElement.nextElementSibling.textContent = user.stats.views;
+                        if (user.stats.downloads) document.querySelector('.fa-download').parentElement.nextElementSibling.textContent = user.stats.downloads;
+                    }
+                    
                     // 切换显示状态
                     loggedInUser.classList.remove('hidden');
                     userStatus.classList.remove('hidden');
-                } catch (error) {
-                    console.error('解析用户数据失败:', error);
-                    clearUserData();
+                } else {
+                    throw new Error(result.message || '获取用户信息失败');
                 }
-            } else {
-                // 未登录，跳转到登录页
+            } catch (error) {
+                console.error('获取用户信息失败:', error);
+                clearUserData();
                 window.location.href = 'login.html';
             }
         }
@@ -494,44 +525,74 @@
         // 检查用户登录状态
         async function checkUserAuth() {
             const token = localStorage.getItem('lingo_token');
-            const userData = localStorage.getItem('lingo_user');
             
-            if (!token || !userData) {
+            if (!token) {
                 window.location.href = 'login.html';
                 return false;
             }
 
             try {
-                // 模拟API调用验证token
-                // 在实际应用中，这里应该调用真实的API
-                // 为了演示目的，我们直接使用本地存储的数据
-                const user = JSON.parse(userData);
+                // 调用后端API验证token
+                const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
                 
-                // 模拟API响应延迟
-                await new Promise(resolve => setTimeout(resolve, 500));
+                const result = await response.json();
                 
-                // 假设token总是有效的（演示目的）
-                return true;
+                if (result.success) {
+                    // token有效，更新用户数据
+                    const user = result.data;
+                    localStorage.setItem('lingo_user', JSON.stringify(user));
+                    return true;
+                } else {
+                    // token无效
+                    console.error('Token验证失败:', result.message);
+                    clearUserData();
+                    window.location.href = 'login.html';
+                    return false;
+                }
                 
             } catch (error) {
                 console.error('验证用户状态失败:', error);
-                // 如果验证失败，仍然显示用户信息（演示目的）
-                return true;
+                clearUserData();
+                window.location.href = 'login.html';
+                return false;
             }
         }
 
         // 页面加载时初始化用户状态
         document.addEventListener('DOMContentLoaded', async () => {
-            // 先更新UI状态
-            updateUserStatus();
-            
-            // 然后验证token有效性（非阻塞）
-            checkUserAuth().then(isValid => {
-                if (!isValid) {
-                    // 如果验证失败，会跳转到登录页
-                    return;
+            // 验证用户登录状态
+            try {
+                // 显示加载状态
+                const mainContent = document.querySelector('.grid.grid-cols-1');
+                const loadingOverlay = document.createElement('div');
+                loadingOverlay.className = 'fixed inset-0 bg-white/80 z-50 flex items-center justify-center';
+                loadingOverlay.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                        <p class="text-lg font-medium text-dark">加载中...</p>
+                    </div>
+                `;
+                document.body.appendChild(loadingOverlay);
+                
+                // 等待用户信息加载完成
+                await updateUserStatus();
+                
+                // 移除加载状态
+                document.body.removeChild(loadingOverlay);
+            } catch (error) {
+                console.error('初始化失败:', error);
+                // 如果加载失败，也移除加载状态
+                const loadingOverlay = document.querySelector('.fixed.inset-0');
+                if (loadingOverlay) {
+                    document.body.removeChild(loadingOverlay);
                 }
-            });
+            }
             
             // 绑定退出按钮事件
             document.getElementById('logout-btn').addEventListener('click', logout);

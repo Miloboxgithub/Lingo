@@ -361,6 +361,37 @@
         // API基础URL
         const API_BASE_URL = 'http://localhost:3000/api';
 
+        // 检查用户登录状态
+        async function checkLoginStatus() {
+            const token = localStorage.getItem('lingo_token');
+            if (token) {
+                try {
+                    // 验证token的有效性
+                    const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        // token有效，用户已登录，直接跳转到首页
+                        console.log('用户已登录，自动跳转到首页');
+                        window.location.href = 'index.html';
+                    }
+                } catch (error) {
+                    console.error('验证token失败:', error);
+                    // token无效或其他错误，继续显示注册页面
+                }
+            }
+        }
+
+        // 页面加载时检查登录状态
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
+
         // 注册表单处理
         document.getElementById('register-form').addEventListener('submit', async function(e) {
             e.preventDefault();

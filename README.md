@@ -20,9 +20,11 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="版本">
+  <img src="https://img.shields.io/badge/version-2.0.0-blue.svg" alt="版本">
   <img src="https://img.shields.io/badge/license-MIT-green.svg" alt="许可证">
   <img src="https://img.shields.io/badge/status-active-success.svg" alt="状态">
+  <img src="https://img.shields.io/badge/node.js-18+-green.svg" alt="Node.js">
+  <img src="https://img.shields.io/badge/mongodb-7.0+-green.svg" alt="MongoDB">
 </p>
 
 ## 🌟 项目简介 <a id="project-introduction"></a>
@@ -36,6 +38,8 @@
 - 🎯 **参数化设计** - 精准控制生成效果
 - 👥 **创作者社区** - 活跃的交流分享平台
 - 💼 **商业授权** - 完善的版权保护机制
+- 🔐 **用户认证系统** - 安全的用户管理和数据保护
+- 🚀 **全栈架构** - 现代化的前后端分离设计
 
 ## 🚀 核心功能 <a id="core-features"></a>
 
@@ -44,6 +48,7 @@
 - **参数化调节**：复杂度、色彩方案、关键词描述
 - **实时预览**：即时生成效果展示
 - **批量生成**：支持多种参数组合生成
+- **作品保存**：云端存储生成的作品
 
 ### 2. 文创展示平台
 - **作品展示**：展示用户生成的文创设计
@@ -56,10 +61,10 @@
 - **活动参与**：设计大赛、工作坊
 - **合作机会**：创作者与品牌对接
 
-### 4. 会员服务
-- **免费版**：基础功能体验
-- **创作者版**：专业创作工具
-- **企业版**：团队协作功能
+### 4. 用户系统
+- **用户注册/登录**：安全的身份验证
+- **个人中心**：作品管理、个人信息设置
+- **会员服务**：免费版、创作者版、企业版
 
 ## 🛠️ 技术栈 <a id="tech-stack"></a>
 
@@ -71,20 +76,29 @@
 - **Font Awesome** - 图标库
 
 ### 后端技术
-- **Python** - 服务器部署
-- **HTTP Server** - 轻量级Web服务器
+- **Node.js** - 服务器运行环境
+- **Express.js** - Web应用框架
+- **MongoDB** - NoSQL数据库
+- **Mongoose** - MongoDB对象建模工具
+- **JWT** - JSON Web Token认证
+- **bcryptjs** - 密码加密
+- **Multer** - 文件上传处理
+- **CORS** - 跨域资源共享
 
 ### 开发工具
 - **Visual Studio Code** - 代码编辑器
 - **Git** - 版本控制
+- **Nodemon** - 开发热重载
+- **PM2** - 生产环境进程管理
 
 ## 🎯 快速开始 <a id="quick-start"></a>
 
 ### 环境要求
-- Python 3.6+
+- Node.js 18+
+- MongoDB 7.0+
 - 现代浏览器（Chrome、Firefox、Safari、Edge）
 
-### 本地运行
+### 本地开发
 
 1. **克隆项目**
    ```bash
@@ -92,71 +106,129 @@
    cd Lingo
    ```
 
-2. **启动服务器**
+2. **安装依赖**
    ```bash
-   python deploy_server.py
+   npm install
    ```
 
-3. **访问应用**
-   打开浏览器访问：`http://localhost:8080`
+3. **配置环境变量**
+   创建 `.env` 文件：
+   ```env
+   PORT=3000
+   MONGO_URI=mongodb://localhost:27017/lingo_db
+   JWT_SECRET=your-secret-key
+   JWT_EXPIRES_IN=24h
+   UPLOAD_DIR=uploads
+   NODE_ENV=development
+   ```
+
+4. **启动MongoDB服务**
+   ```bash
+   # 确保MongoDB服务正在运行
+   mongod
+   ```
+
+5. **启动开发服务器**
+   ```bash
+   npm run dev
+   ```
+
+6. **访问应用**
+   打开浏览器访问：`http://localhost:3000`
 
 ### 生产部署
 
-1. **配置服务器**
-   ```bash
-   # 安装依赖（如有）
-   pip install -r requirements.txt
-   ```
+项目提供了完整的自动化部署脚本：
 
-2. **启动服务**
-   ```bash
-   python deploy_server.py
-   ```
+#### Linux 部署
+```bash
+chmod +x ./deploy_to_aliyun.sh
+./deploy_to_aliyun.sh
+```
 
-3. **配置反向代理**（可选）
-   ```nginx
-   server {
-       listen 80;
-       server_name your-domain.com;
-       
-       location / {
-           proxy_pass http://localhost:8080;
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-       }
-   }
-   ```
+#### Windows 部署
+```bash
+npm run deploy:win
+```
+
+#### 快速部署
+```bash
+chmod +x ./quick_deploy.sh
+./quick_deploy.sh
+```
 
 ## 📁 项目结构 <a id="project-structure"></a>
 
 ```
 Lingo/
-├── index.html              # 主页面
-├── generator.html          # AI生成器页面
-├── works.html             # 作品展示页面
-├── community.html         # 社区页面
-├── pricing.html           # 定价页面
-├── login.html             # 登录页面
-├── register.html          # 注册页面
-├── profile.html           # 个人中心页面
-├── index.css              # 样式文件
-├── logo.jpg               # 项目Logo
-├── logo.svg               # SVG Logo
-├── logo_simple.svg        # 简化版Logo
-├── deploy_server.py       # 部署服务器脚本
-└── .gitignore            # Git忽略文件
+├── 📄 前端文件
+│   ├── index.html              # 主页面
+│   ├── generator.html          # AI生成器页面
+│   ├── works.html              # 作品展示页面
+│   ├── community.html          # 社区页面
+│   ├── pricing.html            # 定价页面
+│   ├── login.html              # 登录页面
+│   ├── register.html           # 注册页面
+│   ├── profile.html            # 个人中心页面
+│   └── index.css               # 样式文件
+│
+├── 🔧 后端文件
+│   ├── server.js               # 主服务器文件
+│   ├── package.json            # 项目配置
+│   ├── models/                 # 数据模型
+│   │   ├── User.js             # 用户模型
+│   │   └── Work.js             # 作品模型
+│   ├── routes/                 # 路由文件
+│   │   ├── authRoutes.js       # 认证路由
+│   │   ├── userRoutes.js       # 用户路由
+│   │   ├── generatorRoutes.js  # 生成器路由
+│   │   └── worksRoutes.js      # 作品路由
+│   └── utils/                  # 工具函数
+│       ├── aiService.js        # AI服务
+│       ├── authUtils.js        # 认证工具
+│       └── uploadUtils.js      # 上传工具
+│
+├── 🚀 部署脚本
+│   ├── deploy_to_aliyun.sh     # Linux部署脚本
+│   ├── DeployToAliyun.ps1      # Windows部署脚本
+│   ├── quick_deploy.sh         # 快速部署脚本
+│   ├── server_deploy.sh        # 服务器部署脚本
+│   └── server_quick_update.sh  # 快速更新脚本
+│
+├── 🎨 资源文件
+│   ├── logo.jpg                # 项目Logo
+│   ├── logo.svg                # SVG Logo
+│   ├── logo_simple.svg         # 简化版Logo
+│   └── uploads/                # 文件上传目录
+│
+└── 📝 配置文件
+    ├── .gitignore              # Git忽略文件
+    └── README.md               # 项目说明
 ```
 
-### 页面说明
+### API 接口说明
 
-- **index.html** - 项目主页，展示平台特色和功能
-- **generator.html** - AI纹样生成器，核心功能页面
-- **works.html** - 文创作品展示和浏览
-- **community.html** - 创作者社区和交流平台
-- **pricing.html** - 会员定价和功能对比
-- **login.html** - 用户登录页面
-- **register.html** - 用户注册页面
-- **profile.html** - 个人中心和管理页面
+#### 认证相关
+- `POST /api/auth/register` - 用户注册
+- `POST /api/auth/login` - 用户登录
+- `GET /api/auth/me` - 获取当前用户信息
+- `POST /api/auth/logout` - 用户退出
+
+#### 用户相关
+- `GET /api/users/profile` - 获取用户资料
+- `PUT /api/users/profile` - 更新用户资料
+- `GET /api/users/works` - 获取用户作品
+
+#### 生成器相关
+- `POST /api/generator/generate` - AI纹样生成
+- `GET /api/generator/history` - 获取生成历史
+
+#### 作品相关
+- `GET /api/works` - 获取作品列表
+- `POST /api/works` - 创建作品
+- `GET /api/works/:id` - 获取作品详情
+- `PUT /api/works/:id` - 更新作品
+- `DELETE /api/works/:id` - 删除作品
 
 ## 🎨 设计特色 <a id="design-features"></a>
 
@@ -170,6 +242,7 @@ Lingo/
 - **直观操作**：简洁明了的界面设计
 - **实时反馈**：操作即时响应
 - **渐进增强**：基础功能优先，高级功能渐进
+- **安全可靠**：完善的用户认证和数据保护
 
 ## 🔧 部署指南 <a id="deployment-guide"></a>
 
@@ -177,39 +250,63 @@ Lingo/
 
 1. **环境配置**
    ```bash
-   # 确保Python环境
-   python --version
+   # 确保Node.js环境
+   node --version
+   
+   # 确保MongoDB环境
+   mongod --version
    ```
 
 2. **启动开发服务器**
    ```bash
-   python deploy_server.py
+   npm run dev
    ```
 
 3. **访问测试**
-   - 本地访问：`http://localhost:8080`
-   - 局域网访问：`http://[你的IP]:8080`
+   - 本地访问：`http://localhost:3000`
+   - 局域网访问：`http://[你的IP]:3000`
 
 ### 生产环境
 
+项目支持一键部署到阿里云服务器，部署脚本会自动完成以下操作：
+
 1. **服务器准备**
-   - 确保80/443端口开放
-   - 配置域名解析
+   - 自动安装Node.js环境
+   - 自动安装MongoDB数据库
+   - 自动安装Nginx反向代理
+   - 自动配置防火墙规则
 
-2. **部署步骤**
-   ```bash
-   # 上传项目文件
-   scp -r Lingo/ user@server:/path/to/project/
-   
-   # 服务器启动
-   cd /path/to/project
-   nohup python deploy_server.py &
-   ```
+2. **项目部署**
+   - 上传项目文件到服务器
+   - 安装项目依赖
+   - 配置环境变量
+   - 创建必要目录结构
 
-3. **监控维护**
-   - 使用`htop`监控进程
+3. **服务启动**
+   - 使用PM2管理Node.js进程
+   - 配置Nginx反向代理
+   - 设置服务开机自启
+
+4. **监控维护**
+   - 使用PM2监控应用状态
    - 配置日志轮转
    - 定期备份数据
+
+### 部署命令
+
+```bash
+# Linux部署
+./deploy_to_aliyun.sh
+
+# Windows部署
+npm run deploy:win
+
+# 快速部署
+./quick_deploy.sh
+
+# 服务器快速更新
+./server_quick_update.sh
+```
 
 ## 🤝 贡献指南 <a id="contributing"></a>
 
@@ -234,7 +331,16 @@ Lingo/
 
 ## 📝 更新日志 <a id="changelog"></a>
 
-### v1.0.0 (2025-10-1)
+### v2.0.0 (2025-10-18)
+- ✅ **全栈架构升级** - 从静态网站升级为完整的全栈应用
+- ✅ **Node.js后端** - 基于Express.js的现代化后端架构
+- ✅ **MongoDB数据库** - 集成NoSQL数据库存储
+- ✅ **用户认证系统** - JWT认证和用户管理
+- ✅ **自动化部署** - 支持一键部署到阿里云服务器
+- ✅ **API接口** - 完整的RESTful API设计
+- ✅ **文件上传** - 支持作品图片上传和管理
+
+### v1.0.0 (2025-10-10)
 - ✅ 基础平台功能完成
 - ✅ AI纹样生成器
 - ✅ 用户认证系统
@@ -255,19 +361,12 @@ A: 目前支持PNG格式导出，后续将支持SVG、JPG等格式。
 ### Q: 如何保护我的创意？
 A: 我们提供水印保护、版权登记和作品溯源等多重保护机制。
 
-## 📄 许可证 <a id="license"></a>
+### Q: 部署需要什么环境？
+A: 需要Node.js 18+和MongoDB 7.0+环境，部署脚本会自动安装所需组件。
 
-本项目采用 MIT 许可证 - 查看 [LICENSE]() 文件了解详情。
+### Q: 如何配置数据库连接？
+A: 通过环境变量 `MONGO_URI` 配置MongoDB连接字符串。
 
-## 📞 联系我们 <a id="contact"></a>
-
-- **邮箱**: 
-- **电话**: 
-- **地址**: 
-- **社交媒体**: 
-  - 微博: [@Lingo文创]()
-  - 微信: 
-  - Instagram: [@lingo.design]()
 
 ## 🙏 致谢 <a id="acknowledgments"></a>
 

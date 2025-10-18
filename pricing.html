@@ -414,29 +414,54 @@
         const API_BASE_URL = 'http://localhost:3000/api';
 
         // 用户状态管理
-        function updateUserStatus() {
+        async function updateUserStatus() {
             const token = localStorage.getItem('lingo_token');
-            const userData = localStorage.getItem('lingo_user');
             
             const loggedInUser = document.getElementById('logged-in-user');
             const guestUser = document.getElementById('guest-user');
             const userStatus = document.getElementById('user-status');
             
-            if (token && userData) {
+            if (token) {
                 try {
-                    const user = JSON.parse(userData);
+                    // 通过API获取用户信息
+                    const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
                     
-                    // 显示用户信息
-                    document.getElementById('user-name').textContent = user.username;
-                    document.getElementById('user-avatar').src = user.avatar || 'https://randomuser.me/api/portraits/lego/1.jpg';
+                    const result = await response.json();
                     
-                    // 切换显示状态
-                    loggedInUser.classList.remove('hidden');
-                    guestUser.classList.add('hidden');
-                    userStatus.classList.remove('hidden');
+                    if (result.success) {
+                        const user = result.data.user;
+                        
+                        // 更新localStorage中的用户信息
+                        localStorage.setItem('lingo_user', JSON.stringify(user));
+                        
+                        // 显示用户信息
+                        document.getElementById('user-name').textContent = user.username;
+                        document.getElementById('user-avatar').src = user.avatar || 'https://randomuser.me/api/portraits/lego/1.jpg';
+                        
+                        // 切换显示状态
+                        loggedInUser.classList.remove('hidden');
+                        guestUser.classList.add('hidden');
+                        userStatus.classList.remove('hidden');
+                    } else {
+                        // 用户信息获取失败，清除数据
+                        clearUserData();
+                        // 显示访客状态
+                        loggedInUser.classList.add('hidden');
+                        guestUser.classList.remove('hidden');
+                        userStatus.classList.remove('hidden');
+                    }
                 } catch (error) {
-                    console.error('解析用户数据失败:', error);
-                    clearUserData();
+                    console.error('获取用户信息失败:', error);
+                    // 显示访客状态
+                    loggedInUser.classList.add('hidden');
+                    guestUser.classList.remove('hidden');
+                    userStatus.classList.remove('hidden');
                 }
             } else {
                 // 显示访客状态
@@ -468,7 +493,7 @@
             }
 
             try {
-                const response = await fetch(`${API_BASE_URL}/auth/me`, {
+                const response = await fetch(`${API_BASE_URL}/auth/verify`, {
                     method: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -479,8 +504,10 @@
                 const result = await response.json();
                 
                 if (result.success) {
-                    // 更新用户信息
-                    localStorage.setItem('lingo_user', JSON.stringify(result.data.user));
+                    // token有效，更新用户信息
+                    if (result.data && result.data.user) {
+                        localStorage.setItem('lingo_user', JSON.stringify(result.data.user));
+                    }
                     return true;
                 } else {
                     // token无效，清除数据
@@ -495,13 +522,19 @@
 
         // 页面加载时初始化用户状态
         document.addEventListener('DOMContentLoaded', async () => {
-            // 先更新UI状态
-            updateUserStatus();
-            
-            // 然后验证token有效性
-            const isValid = await checkUserAuth();
-            if (!isValid) {
-                updateUserStatus(); // 重新更新状态
+            try {
+                // 通过updateUserStatus()获取并更新用户状态
+                await updateUserStatus();
+            } catch (error) {
+                console.error('初始化用户状态失败:', error);
+                // 确保UI显示正确的状态
+                const loggedInUser = document.getElementById('logged-in-user');
+                const guestUser = document.getElementById('guest-user');
+                const userStatus = document.getElementById('user-status');
+                
+                loggedInUser.classList.add('hidden');
+                guestUser.classList.remove('hidden');
+                userStatus.classList.remove('hidden');
             }
             
             // 绑定退出按钮事件
