@@ -202,7 +202,7 @@ Lingo/
 │   └── uploads/                # 文件上传目录
 │
 └── 📝 配置文件
-    ├── .gitignore              # Git忽略文件
+    ├── .gitignore              # Git忽略文件（已配置忽略敏感文件和依赖）
     └── README.md               # 项目说明
 ```
 
