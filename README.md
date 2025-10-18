@@ -188,12 +188,6 @@ Lingo/
 │       ├── authUtils.js        # 认证工具
 │       └── uploadUtils.js      # 上传工具
 │
-├── 🚀 部署脚本
-│   ├── deploy_to_aliyun.sh     # Linux部署脚本
-│   ├── DeployToAliyun.ps1      # Windows部署脚本
-│   ├── quick_deploy.sh         # 快速部署脚本
-│   ├── server_deploy.sh        # 服务器部署脚本
-│   └── server_quick_update.sh  # 快速更新脚本
 │
 ├── 🎨 资源文件
 │   ├── logo.jpg                # 项目Logo
