@@ -136,26 +136,6 @@
 6. **访问应用**
    打开浏览器访问：`http://localhost:3000`
 
-### 生产部署
-
-项目提供了完整的自动化部署脚本：
-
-#### Linux 部署
-```bash
-chmod +x ./deploy_to_aliyun.sh
-./deploy_to_aliyun.sh
-```
-
-#### Windows 部署
-```bash
-npm run deploy:win
-```
-
-#### 快速部署
-```bash
-chmod +x ./quick_deploy.sh
-./quick_deploy.sh
-```
 
 ## 📁 项目结构 <a id="project-structure"></a>
 
@@ -238,69 +218,7 @@ Lingo/
 - **渐进增强**：基础功能优先，高级功能渐进
 - **安全可靠**：完善的用户认证和数据保护
 
-## 🔧 部署指南 <a id="deployment-guide"></a>
 
-### 本地开发
-
-1. **环境配置**
-   ```bash
-   # 确保Node.js环境
-   node --version
-   
-   # 确保MongoDB环境
-   mongod --version
-   ```
-
-2. **启动开发服务器**
-   ```bash
-   npm run dev
-   ```
-
-3. **访问测试**
-   - 本地访问：`http://localhost:3000`
-   - 局域网访问：`http://[你的IP]:3000`
-
-### 生产环境
-
-项目支持一键部署到阿里云服务器，部署脚本会自动完成以下操作：
-
-1. **服务器准备**
-   - 自动安装Node.js环境
-   - 自动安装MongoDB数据库
-   - 自动安装Nginx反向代理
-   - 自动配置防火墙规则
-
-2. **项目部署**
-   - 上传项目文件到服务器
-   - 安装项目依赖
-   - 配置环境变量
-   - 创建必要目录结构
-
-3. **服务启动**
-   - 使用PM2管理Node.js进程
-   - 配置Nginx反向代理
-   - 设置服务开机自启
-
-4. **监控维护**
-   - 使用PM2监控应用状态
-   - 配置日志轮转
-   - 定期备份数据
-
-### 部署命令
-
-```bash
-# Linux部署
-./deploy_to_aliyun.sh
-
-# Windows部署
-npm run deploy:win
-
-# 快速部署
-./quick_deploy.sh
-
-# 服务器快速更新
-./server_quick_update.sh
-```
 
 ## 🤝 贡献指南 <a id="contributing"></a>
 
@@ -325,7 +243,7 @@ npm run deploy:win
 
 ## 📝 更新日志 <a id="changelog"></a>
 
-### v2.0.0 (2025-10-18)
+### v1.1.0 (2025-10-18)
 - ✅ **全栈架构升级** - 从静态网站升级为完整的全栈应用
 - ✅ **Node.js后端** - 基于Express.js的现代化后端架构
 - ✅ **MongoDB数据库** - 集成NoSQL数据库存储
